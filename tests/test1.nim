@@ -7,12 +7,15 @@
 
 
 
-# import unittest
+import unittest
 # import std/json
 # 
 # import Nimduvo
 # test "can return content":
 #  check getUser(88) is st
 import Nimduvo/users
+import std/[asyncdispatch, tables]
 
-echo getUser(88)
+let functionCall =  waitFor getUser(88)
+
+echo functionCall
