@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "1.0.0"
 author        = "sednoids"
 description   = "A Nim wrapper for the Luduvo API."
 license       = "MIT"
