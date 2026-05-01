@@ -14,8 +14,8 @@ import unittest
 # test "can return content":
 #  check getUser(88) is st
 import Nimduvo/users
-import std/[asyncdispatch, tables]
+import std/[asyncdispatch, tables, json]
 
 let functionCall =  waitFor getUser(88)
 
-echo functionCall
+echo $(%functionCall)
