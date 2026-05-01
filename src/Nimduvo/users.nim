@@ -8,7 +8,8 @@ type
 proc initSubmodule*(): Submodule =
     Submodule(name: "users")
 
-proc getUser*(userId: int): Future[tables.OrderedTable[string, JsonNode]] {.async.} =
+# note to self: find out how to deal with invalid user ids
+proc getUser*(userId: int): Future[JsonNode] {.async.} =
     ## Gets a user given a specific user ID.
     var client = newAsyncHttpClient()
     defer: client.close()
@@ -29,7 +30,7 @@ proc getUser*(userId: int): Future[tables.OrderedTable[string, JsonNode]] {.asyn
         
         let res: OrderedTable[string, JsonNode] = {
             "user_id": userId, 
-            "user_name": username, 
+            "username": username, 
             "member_since": memberSince, 
             "last_active": lastActive, 
             "displayName": displayName, 
@@ -38,9 +39,9 @@ proc getUser*(userId: int): Future[tables.OrderedTable[string, JsonNode]] {.asyn
             "bio": bio,
             "accent_colour": accentColour}.toOrderedTable()
         
-        return res
+        return %*res
         
     except KeyError as e:
         let error: OrderedTable[string, JsonNode] = {
             "error": %e.msg}.toOrderedTable()
-        return error
+        return %*error
