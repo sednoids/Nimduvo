@@ -23,10 +23,18 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
             memberSince = contentToJson["member_since"]
             lastActive = contentToJson["last_active"]
             displayName = contentToJson["display_name"]
+            avatar = contentToJson["avatar"]
             banner_url = contentToJson["banner_url"]
             status = contentToJson["status"]
             bio = contentToJson["bio"]
             accentColour = contentToJson["accent_color"]
+            equippedItems = contentToJson["equippedItems"]
+            badges = contentToJson["badges"]
+            friendCount = contentToJson["friend_count"]
+            placeCount = contentToJson["place_count"]
+            itemCount = contentToJson["item_count"]
+            allowJoins = contentToJson["allow_joins"]
+            isOwner = contentToJson["is_owner"]            
         
         let res: OrderedTable[string, JsonNode] = {
             "user_id": userId, 
@@ -37,7 +45,15 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
             "banner_url": banner_url,
             "status": status,
             "bio": bio,
-            "accent_colour": accentColour}.toOrderedTable()
+            "accent_colour": accentColour,
+            "avatar": avatar,
+            "equipped_items": equippedItems,
+            "badges": badges,
+            "friend_count": friendCount,
+            "place_count": placeCount,
+            "item_count": itemCount,
+            "allow_joins": allowJoins,
+            "is_owner": isOwner}.toOrderedTable()
         
         return %*res
         
