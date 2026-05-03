@@ -14,7 +14,7 @@ let users = waitFor getUser(88)
 echo $users
 ```
 
-```json
+```
 users: {
   user_id: 88,
   username: "sed",
