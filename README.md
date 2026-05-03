@@ -15,6 +15,7 @@ echo $users
 ```
 
 ```json
+users: {
   user_id: 88,
   username: "sed",
   member_since: 1775081519,
