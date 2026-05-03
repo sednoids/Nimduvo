@@ -36,7 +36,7 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
             allowJoins = contentToJson["allow_joins"]
             isOwner = contentToJson["is_owner"]            
         
-        let res: OrderedTable[string, JsonNode] = {
+        return %*{
             "user_id": userId, 
             "username": username, 
             "member_since": memberSince, 
@@ -55,9 +55,9 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
             "allow_joins": allowJoins,
             "is_owner": isOwner}.toOrderedTable()
         
-        return %*res
-        
-    except KeyError as e:
-        let error: OrderedTable[string, JsonNode] = {
-            "error": %e.msg}.toOrderedTable()
-        return %*error
+    except KeyError as keyError:
+        return %*{
+            "error": %keyError.msg}.toOrderedTable()
+    except HttpRequestError as httpError:
+        return %*{
+            "error": httpError.msg.substr(0, 12)}.toOrderedTable()
