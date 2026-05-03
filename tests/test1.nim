@@ -1,6 +1,6 @@
 import Nimduvo/users
 import std/[asyncdispatch, json]
 
-let functionCall =  waitFor getUser(88)
+let functionCall =  waitFor getUser(40394)
 
 echo $functionCall
