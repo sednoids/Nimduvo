@@ -30,7 +30,7 @@ proc getGroup*(groupId: int): Future[JsonNode] {.async.} =
             updatedAt = contentToJson["updated_at"]
             pendingIcon = contentToJson["pending_icon"]
 
-        let response: OrderedTable[string, JsonNode] = {
+        return %*{
             "group_id": groupId,
             "group_name": groupName,
             "group_description": groupDescription,
@@ -41,13 +41,8 @@ proc getGroup*(groupId: int): Future[JsonNode] {.async.} =
             "icon_url": iconUrl,
             "created_at": createdAt,
             "updated_at": updatedAt,
-            "pending_icon": pendingIcon
-        }.toOrderedTable()
+            "pending_icon": pendingIcon}.toOrderedTable()
 
-        return %*response
-
-
-    except KeyError as e:
-        let error = {
-            "error": e.msg}.toOrderedTable()
-        return %*error
+    except HttpRequestError as httpError:
+        return %*{
+            "error": httpError.msg.substr(0, 12)}.toOrderedTable()
