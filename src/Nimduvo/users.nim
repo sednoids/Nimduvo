@@ -54,10 +54,7 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
             "item_count": itemCount,
             "allow_joins": allowJoins,
             "is_owner": isOwner}.toOrderedTable()
-        
-    except KeyError as keyError:
-        return %*{
-            "error": %keyError.msg}.toOrderedTable()
+
     except HttpRequestError as httpError:
         return %*{
             "error": httpError.msg.substr(0, 12)}.toOrderedTable()
