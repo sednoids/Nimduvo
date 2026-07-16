@@ -16,44 +16,25 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
     try:
         let content = await client.getContent(fmt"https://api.luduvo.com/users/{userId}/profile");
         let contentToJson = content.fromJson(JsonNode)
-
-        let
-            userId = contentToJson["user_id"]
-            username = contentToJson["username"]
-            memberSince = contentToJson["member_since"]
-            lastActive = contentToJson["last_active"]
-            displayName = contentToJson["display_name"]
-            avatar = contentToJson["avatar"]
-            banner_url = contentToJson["banner_url"]
-            status = contentToJson["status"]
-            bio = contentToJson["bio"]
-            accentColour = contentToJson["accent_color"]
-            equippedItems = contentToJson["equipped_items"]
-            badges = contentToJson["badges"]
-            friendCount = contentToJson["friend_count"]
-            placeCount = contentToJson["place_count"]
-            itemCount = contentToJson["item_count"]
-            allowJoins = contentToJson["allow_joins"]
-            isOwner = contentToJson["is_owner"]            
         
         return %*{
-            "user_id": userId, 
-            "username": username, 
-            "member_since": memberSince, 
-            "last_active": lastActive, 
-            "displayName": displayName, 
-            "banner_url": banner_url,
-            "status": status,
-            "bio": bio,
-            "accent_colour": accentColour,
-            "avatar": avatar,
-            "equipped_items": equippedItems,
-            "badges": badges,
-            "friend_count": friendCount,
-            "place_count": placeCount,
-            "item_count": itemCount,
-            "allow_joins": allowJoins,
-            "is_owner": isOwner}.toOrderedTable()
+            "user_id": contentToJson["user_id"], 
+            "username": contentToJson["username"], 
+            "member_since": contentToJson["member_since"], 
+            "last_active": contentToJson["last_active"], 
+            "displayName": contentToJson["display_name"], 
+            "banner_url": contentToJson["banner_url"],
+            "status": contentToJson["status"],
+            "bio": contentToJson["bio"],
+            "accent_colour": contentToJson["accent_color"],
+            "avatar": contentToJson["avatar"],
+            "equipped_items": contentToJson["equipped_items"],
+            "badges": contentToJson["badges"],
+            "friend_count": contentToJson["friend_count"],
+            "place_count": contentToJson["place_count"],
+            "item_count": contentToJson["item_count"],
+            "allow_joins": contentToJson["allow_joins"],
+            "is_owner": contentToJson["is_owner"]  }.toOrderedTable()
 
     except HttpRequestError as httpError:
         return %*{
