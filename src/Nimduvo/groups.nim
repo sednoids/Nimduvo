@@ -16,32 +16,19 @@ proc getGroup*(groupId: int): Future[JsonNode] {.async.} =
         let 
             content = await client.getContent(fmt"https://api.luduvo.com/groups/{groupId}")
             contentToJson = content.fromJson(JsonNode)
-    
-        let 
-            groupId = contentToJson["id"]
-            groupName = contentToJson["name"]
-            groupDescription = contentToJson["description"]
-            ownerId = contentToJson["owner_id"]
-            ownerUsername = contentToJson["owner_username"]
-            access = contentToJson["access"]
-            memberCount = contentToJson["member_count"]
-            iconUrl = contentToJson["icon_url"]
-            createdAt = contentToJson["created_at"]
-            updatedAt = contentToJson["updated_at"]
-            pendingIcon = contentToJson["pending_icon"]
 
         return %*{
-            "group_id": groupId,
-            "group_name": groupName,
-            "group_description": groupDescription,
-            "owner_id": ownerId,
-            "owner_username": ownerUsername,
-            "access": access,
-            "member_count": memberCount,
-            "icon_url": iconUrl,
-            "created_at": createdAt,
-            "updated_at": updatedAt,
-            "pending_icon": pendingIcon}.toOrderedTable()
+            "group_id": contentToJson["id"],
+            "group_name": contentToJson["name"],
+            "group_description": contentToJson["description"],
+            "owner_id": contentToJson["owner_id"],
+            "owner_username": contentToJson["owner_username"],
+            "access": contentToJson["access"],
+            "member_count": contentToJson["member_count"],
+            "icon_url": contentToJson["icon_url"],
+            "created_at": contentToJson["created_at"],
+            "updated_at": contentToJson["updated_at"],
+            "pending_icon": contentToJson["pending_icon"]}.toOrderedTable()
 
     except HttpRequestError as httpError:
         return %*{
