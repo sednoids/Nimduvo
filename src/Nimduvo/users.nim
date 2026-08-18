@@ -41,7 +41,7 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
     ## 
     ## ``allowJoins``: Whether the user allows joins off their profile.
     ## 
-    ## ``isOwner``: Whether the account is the owner of Luduvo
+    ## ``isOwner``: Whether the account is the owner of Luduvo.
     var client = newAsyncHttpClient()
     defer: client.close()
     try:
