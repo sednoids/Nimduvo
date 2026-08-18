@@ -1,0 +1,14 @@
+src/Nimduvo/users.nim
+  h_65fde7cab2abb6 44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "aef4371a11167bf501464612afa15a58c7ebc24b",
+  "prompts": {},
+  "humans": {
+    "h_65fde7cab2abb6": {
+      "author": "sednoids <nothernfanofficial@gmail.com>"
+    }
+  }
+}
