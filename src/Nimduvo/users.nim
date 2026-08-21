@@ -8,9 +8,40 @@ type
 proc initSubmodule*(): Submodule =
     Submodule(name: "users")
 
-# note to self: find out how to deal with invalid user ids
 proc getUser*(userId: int): Future[JsonNode] {.async.} =
     ## Gets a user given a specific user ID.
+    ## 
+    ## ``userId``: The user ID.
+    ## 
+    ## ``username``: The username.
+    ## 
+    ## ``memberSince``: The account's creation date.
+    ## 
+    ## ``lastActive``: The last time the user was active.
+    ## 
+    ## ``bannerUrl``: The user's banner URL.
+    ## 
+    ## ``status``: The user's status.
+    ## 
+    ## ``bio``: The user's bio.
+    ## 
+    ## ``accentColour``: The user's accent colour.
+    ## 
+    ## ``avatar``: The user's avatar.
+    ## 
+    ## ``equippedItems``: The user's equipped items.
+    ## 
+    ## ``badges``: The user's badges.
+    ## 
+    ## ``friendCount``: The user's friend count.
+    ## 
+    ## ``placeCount``: The user's place count (games).
+    ## 
+    ## ``itemCount``: The user's item count.
+    ## 
+    ## ``allowJoins``: Whether the user allows joins off their profile.
+    ## 
+    ## ``isOwner``: Whether the account is the owner of Luduvo.
     var client = newAsyncHttpClient()
     defer: client.close()
     try:
@@ -18,23 +49,23 @@ proc getUser*(userId: int): Future[JsonNode] {.async.} =
         let contentToJson = content.fromJson(JsonNode)
         
         return %*{
-            "user_id": contentToJson["user_id"], 
+            "userId": contentToJson["user_id"], 
             "username": contentToJson["username"], 
-            "member_since": contentToJson["member_since"], 
+            "memberSince": contentToJson["member_since"], 
             "last_active": contentToJson["last_active"], 
             "displayName": contentToJson["display_name"], 
-            "banner_url": contentToJson["banner_url"],
+            "bannerUrl": contentToJson["banner_url"],
             "status": contentToJson["status"],
             "bio": contentToJson["bio"],
-            "accent_colour": contentToJson["accent_color"],
+            "accentColour": contentToJson["accent_color"],
             "avatar": contentToJson["avatar"],
-            "equipped_items": contentToJson["equipped_items"],
+            "equippedItems": contentToJson["equipped_items"],
             "badges": contentToJson["badges"],
-            "friend_count": contentToJson["friend_count"],
-            "place_count": contentToJson["place_count"],
-            "item_count": contentToJson["item_count"],
-            "allow_joins": contentToJson["allow_joins"],
-            "is_owner": contentToJson["is_owner"]  }.toOrderedTable()
+            "friendCount": contentToJson["friend_count"],
+            "placeCount": contentToJson["place_count"],
+            "itemCount": contentToJson["item_count"],
+            "allowJoins": contentToJson["allow_joins"],
+            "isOwner": contentToJson["is_owner"]  }.toOrderedTable()
 
     except HttpRequestError as httpError:
         return %*{

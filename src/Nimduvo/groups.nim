@@ -10,6 +10,28 @@ proc initSubmodule*(): Submodule =
 
 proc getGroup*(groupId: int): Future[JsonNode] {.async.} =
     ## Gets a Luduvo group given their group ID.
+    ## 
+    ## ``groupId``: The group ID. 
+    ## 
+    ## ``groupName``: The group name.
+    ## 
+    ## ``groupDescription``: The group description.
+    ## 
+    ## ``ownerId``: The group owner's ID.
+    ## 
+    ## ``ownerUsername``: The username of the owner.
+    ## 
+    ## ``access``: The type of access the group has. There are **two** types of access: **public** and **invitation**.
+    ## 
+    ## ``memberCount``: The group's member count.
+    ## 
+    ## ``iconUrl``: The icon URL.
+    ## 
+    ## ``createdAt``: The group's creation date.
+    ## 
+    ## ``updateAt``: When last the group was updated.
+    ## 
+    ## ``pendingIcon``: The group's pending icon.
     var client = newAsyncHttpClient()
     defer: client.close()
     try:
@@ -18,17 +40,17 @@ proc getGroup*(groupId: int): Future[JsonNode] {.async.} =
             contentToJson = content.fromJson(JsonNode)
 
         return %*{
-            "group_id": contentToJson["id"],
-            "group_name": contentToJson["name"],
-            "group_description": contentToJson["description"],
-            "owner_id": contentToJson["owner_id"],
-            "owner_username": contentToJson["owner_username"],
+            "groupId": contentToJson["id"],
+            "groupName": contentToJson["name"],
+            "groupDescription": contentToJson["description"],
+            "ownerId": contentToJson["owner_id"],
+            "ownerUsername": contentToJson["owner_username"],
             "access": contentToJson["access"],
-            "member_count": contentToJson["member_count"],
-            "icon_url": contentToJson["icon_url"],
-            "created_at": contentToJson["created_at"],
-            "updated_at": contentToJson["updated_at"],
-            "pending_icon": contentToJson["pending_icon"]}.toOrderedTable()
+            "memberCount": contentToJson["member_count"],
+            "iconUrl": contentToJson["icon_url"],
+            "createdAt": contentToJson["created_at"],
+            "updatedAt": contentToJson["updated_at"],
+            "pendingIcon": contentToJson["pending_icon"]}.toOrderedTable()
 
     except HttpRequestError as httpError:
         return %*{
